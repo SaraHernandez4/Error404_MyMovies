@@ -2,10 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-class Genre(models.Model):
+class  Genre(models.Model):
     name = models.CharField(max_length=100)
     
-    def __str__(self):
+    def _str_(self):
         return self.name
         
 class Job(models.Model):
@@ -35,7 +35,7 @@ class Movie(models.Model):
     credits = models.ManyToManyField(Person, through="MovieCredit")
 
     def __str__(self):
-        return self.title + '' + str(self.release_date.year)
+        return self.title
 
 
 class MovieCredit(models.Model):
