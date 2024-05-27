@@ -1,22 +1,33 @@
 {% extends 'movies/base.html' %}
 
 {% block article %}
-    <div class="flex h-[32rem] bg-slate-200 my-4 bg-cyan-200 rounded-r-lg border-l-4 border-blue-500 flex space-x-4 drop-shadow-md">
-        <img class="rounded-md drop-shadow-lg" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/{{movie.poster_path}}" alt="the imitation game poster">
-        <header>
-            <h1 class="movie-title font-bold">{{movie.title}}</h1>
+
+<div class="space-x-1">
+    
+<! -- INFORMACIÓN RESUMIDA DE LA PELICULA -->
+    <div class="flex flex-wrap bg-green-100 h-auto my-4 
+                rounded-r-lg border-blue-500 space-x-2 drop-shadow-md">
         
-            <div class="movie-info">
+        <img class="flex items-center justify-center h-3/4 sm:w-64 img-movie rounded-md shadow-lg shadow-gray-500/70 " src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/{{movie.poster_path}}" alt="the imitation game poster">
+        
+        <div class="w-full sm:w-4/6 bg-green-100 movie-info">
+            <h1 class="movie-title font-bold">{{movie.title}}</h1>
+           
+            <div class="flex flex-wrap justify-between items-start w-auto sm:w-4/6 movie-info p-5 m-2">
+                
                 <a class="font-bold">Year:</a> <a>{{ movie.release_date|date:"Y" }}</a> 
-                <p class="font-bold">Genders:</p>
-                
-                <ul class="movie-genre list-disc list-inside">
-                    {% for gen in movie.genres.all %}
-                        <li>  {{ gen.name }}</li>
-                    {% endfor %}
-                </ul>
-                
                 <a class="font-bold">Duration: </a> <a>{{movie.running_time}} minutes</a>  
+                <br>
+                <p class="font-bold self-end">Genders:</p>
+                
+                <div class="flex movie-genre text-center w-full space-x-2 space-y-4">
+                    {% for gen in movie.genres.all %}
+                        <spam class="bg-gray-100 font-semibold italic justify-center items-center 
+                                     rounded-full shadow-lg shadow-cyan-500/50 px-3 rounded-full 
+                                     hover:text-blue-700 hover:bg-gray-200 hover:text-lg"> {{ gen.name }}</spam>
+                    {% endfor %}
+                </div>
+                
             </div>         
             
             <h1 class="font-bold">Overview</h1>
@@ -33,14 +44,54 @@
                 <p><a class="font-bold">Reviews: </a>{{reviews.rating}} </p>
                 <p>Total of <a class = "no-underline hover:underline hover:font-bold hover:text-blue-500" href= {% url 'reviews' movie.id %}>reviews</a></p>
             </details>
-            
-        </header>
+        </div>
     </div>
+<! -- FIN DE INFORMACIÓN RESUMIDA DE LA PELICULA -->
     
-    <div class= "text-right">
-        <a href="{% url 'index' %}" class="rounded-full bg-green-400 px-3 py-2 text-sm hover:bg-purple-500 
-                                        font-semibold text-white shadow-sm 
-                                        focus-visible:outline focus-visible:outline-2 
-                                        focus-visible:outline-offset-2 focus-visible:outline-gray-600 drop-shadow-md">Return to menu</a>
+    
+<! -- CASTING -->
+    <div class="w-full bg-green-200 movie-cast mt-2 mb-4">
+        <h1 class="font-semibold italic text-lg">{{movie.title}} Cast</h1>
+        
+        <div class="movie-credits flex grid grid-cols-4 gap-4 text-left text-ellipsis overflow-hidden space-x-2 space-y-2 p-4 text-base">
+            {% for actor in movie.credits.all %}
+                <spam class="bg-gray-100 font-semibold justify-center items-center text-center 
+                             rounded-full shadow-lg shadow-green-500/50 px-3 rounded-full 
+                             hover:text-green-700 hover:bg-gray-200 hover:text-lg"><a id="actor-btn" class = "no-underline hover:underline hover:font-bold hover:text-green-500" 
+                                                                                                    href= {% url 'cast' movie.id actor.name %}>{{ actor.name }}</a></spam>
+            
+            {% endfor %}
+        </div>
     </div>
+<! -- FIN DE CASTING -->
+    
+<! -- RECOMENDACIONES DE PELICULAS -->
+    <div class="w-full bg-green-100 movie-cast">
+        
+        <h1 class="font-semibold italic text-lg">Recommended Movies</h1>
+        
+        <div class="flex grid grid-cols-4 gap-4 text-left text-ellipsis overflow-hidden space-x-2 space-y-2 p-4 text-base">
+            {% for recommended_movie in recommended_movies %}
+            
+                <spam class="bg-gray-200 font-semibold justify-center items-center text-center 
+                             rounded-lg shadow-lg shadow-cyan-500/50 px-3 rounded-full 
+                             hover:text-blue-700 hover:bg-gray-100 hover:text-lg"><a class="no-underline hover:underline hover:font-bold hover:text-blue-500" href="{% url 'movie_detail' recommended_movie.id %}">{{ recommended_movie.title }}</a></spam>
+            {% endfor %}
+        </div>
+    </div>
+<! -- FIN DE RECOMENDACIONES DE PELICULAS -->    
+
+
+<! -- BOTON REGRESO -->    
+    <div class="text-right">
+        <br>
+        <a href="{% url 'index' %}" class="bg-red-500 shadow-lg shadow-red-500/50 px-3 py-2 rounded-full text-sm
+                                                         text-white text-sm font-bold 
+                                                         hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/80 hover:text-cyan-100">Return to menu</a>
+    </div>
+<! -- FIN DE BOTON REGRESO -->  
+    
+</div>
+
+    
 {% endblock %}

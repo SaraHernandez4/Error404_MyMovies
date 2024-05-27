@@ -1,54 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+    
+    
+<! -- CABEZA DE LA PESTAÑA -->
     <head>
         <title>Movie</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/movies/css/output.css" rel="stylesheet">
     </head>
+<! -- FIN DE CABEZA DE LA PESTAÑA -->
+
     
-    <body class="font-sans max-w-4xl mx-auto h-14 
-                bg-gradient-to-r from-teal-200 to-green-200">
-        <div class="h-12 w-full text-right mx-auto mt-5">
+<! -- CUERPO  bg-gradient-to-r from-teal-200 to-green-200 -->
+    <body class="font-sans max-w-4xl mx-auto h-14">
         
+        
+       <! -- LOG IN / LOG OFF  --> 
+        <div class="flex flex-wrap w-full h-24 mx-auto m-5 pl-10 pr-10 items-center text-center justify-between">
             {% if user.is_authenticated %}
-                <p class="hover:font-serif underline decoration-wavy decoration-pink-500 decoration-2 
-                        leading-loose tracking-wide text-xl hover:font-bold capitalize drop-shadow-md">¡Welcome {{user.username}} !</p>
-                <br>
-                <a href="http://3.94.71.170:8000/admin/login/" class="rounded-full bg-red-500 px-3 py-2 text-sm font-bold text-white shadow-sm 
-                    hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 
-                    focus-visible:outline-offset-2 focus-visible:outline-gray-600 drop-shadow-md">Sign off</a>
+            
+                <div class="px-2 rounded-lg shadow-lg shadow-gray-500/70 hover:bg-gray-100">
+                    <p class="leading-loose tracking-wide text-xl capitalize drop-shadow-md">¡Welcome {{user.username}} !</p>
+                    <br>
+                </div>
+                
+                <div>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                            <button type="submit" class="bg-red-500 shadow-lg shadow-red-500/50 px-3 py-2 rounded-full
+                                                         text-white text-sm font-bold 
+                                                         hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/80 hover:text-cyan-100">Logout</button>
+                            
+                    </form>               
+                </div>
+            
             {% else %}
-                <div style="text-aling: right;"> 
-                    <a href="http://3.94.71.170:8000/admin/login/" class="rounded-full bg-gray-300 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm 
-                        hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 
-                        focus-visible:outline-offset-2 focus-visible:outline-gray-600 drop-shadow-md">Log in</a>
+            
+                <div style="flex justify-end text-right"> 
+                    <a href="{% url 'login' %}" class="hover:bg-red-500 hover:shadow-lg hover:shadow-red-500/50 px-3 py-2 rounded-full
+                                                       text-white text-sm font-bold 
+                                                       bg-blue-500 shadow-lg shadow-blue-500/80 hover:text-rose-100">Login</a>
+                    
                 </div>
             {% endif %}
         </div>
-        <br>
-        
-        <header class="h-12 w-full text-center mx-auto mt-5 border-b-2 border-sky-500">
-            <h1 class="font-medium text-3xl">My Movies</h1>
-        </header>
+       <! -- FIN DE LOG IN / LOG OFF  -->   
+       
+       
+
+        <div class="m-5 mt-10 p-5 pr-10 border-2 shadow-lg shadow-gray-500/50">
+            <header class="h-12 w-full text-center mx-auto mt-5 border-b-2 border-sky-500">
+                <h1 class="font-medium text-3xl">My Movies</h1>
+            </header>
+        </div>
     
+    
+        <! -- FORMATO DE PELÍCULAS --> 
         <article class="font-sans leading-loose tracking-wide text-balance text-center">
             {% block article %}
                 
             {% endblock %}
         </article>
+        <! -- FIN DE FORMATO DE PELÍCULAS --> 
         <br>
-        
+    
+    
+        <! -- PIE --> 
         <footer class="h-1 w-full text-center mx-auto mt-5 border-b-2 border-sky-500">
-            <div>
-                <br>
-                <p class= "rounded-md text-blue-950 hover:text-sky-400 font-bold"> Team: Error 404 </p>
-                <br>
-                <a href="https://github.com/SaraHernandez4/Error404_MyMovies" class="rounded-full bg-cyan-500 hover:bg-cyan-600 px-3 py-2 text-sm font-semibold text-white shadow-sm 
-                                           focus-visible:outline focus-visible:outline-2 
-                                           focus-visible:outline-offset-2 focus-visible:outline-indigo-600 drop-shadow-md">GitHub Repository</a>
-                <br>
-            </div>
+            <br>
+            <p class= "rounded-md text-blue-950 hover:text-sky-400 font-bold"> Team: Error 404 </p>
+            <br>
+            <a href=" https://github.com/Estevez31/Error404_mymovies" class="rounded-full bg-cyan-500 hover:bg-cyan-600 px-3 py-2 text-sm font-semibold text-white shadow-sm 
+                                       focus-visible:outline focus-visible:outline-2 
+                                       focus-visible:outline-offset-2 focus-visible:outline-indigo-600 drop-shadow-md">GitHub Repository</a>
+            <br>
         </footer>
+        
+
+        <! -- FIN DE PIE --> 
+
+
     </body>
+<! -- FIN DE CUERPO -->
+
+
 </html>
+<! -- FIN DOCTYPE html -->
